@@ -6,11 +6,7 @@
 #include <QTextStream>
 #include <QStandardPaths>
 #include <QSysInfo>
-#ifdef Q_OS_WIN32
-    #if QT_VERSION >= 0x050900
-        #include <QOperatingSystemVersion>
-    #endif
-#endif
+#include <QOperatingSystemVersion>
 #include <QTranslator>
 QTranslator translator;
 
@@ -31,20 +27,14 @@ void My_SetWindowTitle(QWidget *parent){
     QString productType = QSysInfo::productType();
     QString productVersion = QSysInfo::productVersion();
     QString currentCpuArchitecture = QSysInfo::currentCpuArchitecture();
-    #ifdef Q_OS_WIN32
-        #if QT_VERSION >= 0x050900
-            if(productType.compare("windows")==0&&productVersion.compare("10")==0){
-                int buildNumber = QOperatingSystemVersion::current().microVersion();
-                if (buildNumber >= 22000){
-                        productVersion = "11";
-                }
-            }
+    if(productType.compare("windows")==0&&productVersion.compare("10")==0){
+        int buildNumber = QOperatingSystemVersion::current().microVersion();
+        if (buildNumber >= 22000){
+            productVersion = "11";
         }
-        #endif
-    #endif
+    }
     QString strTemp = productType+":"+productVersion+":"+currentCpuArchitecture;
     parent->setWindowTitle(QObject::tr("QT_Feng37_Bank:")+strTemp);
-
 }
 
 bool My_Locale_Change( QString localName ){
