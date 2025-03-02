@@ -8,9 +8,10 @@
 #include <QSysInfo>
 #include <QOperatingSystemVersion>
 #include <QTranslator>
+#include <QDir>
+
 QTranslator translator;
 
-QString file_name = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/bank_savings.txt";
 int bank_savings[7];
 
 int Calc_Sum_Saving()
@@ -59,7 +60,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->textbox1->setAlignment(Qt::AlignCenter);
     ui->label1->setAlignment(Qt::AlignCenter);
     My_SetWindowTitle(this);
-    QFile file(file_name);
+    QFile file;
+    QDir::setCurrent(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
+    file.setFileName("bank_savings.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     }
     else {
@@ -108,7 +111,9 @@ void MainWindow::on_button1_clicked()
 
 void MainWindow::on_button2_clicked()
 {
-    QFile file(file_name);
+    QFile file;
+    QDir::setCurrent(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
+    file.setFileName("bank_savings.txt");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
     QTextStream out(&file);

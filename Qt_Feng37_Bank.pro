@@ -17,7 +17,7 @@ win32 {
 }
 
 macx {
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
+
 }
 
 unix:!macx {
